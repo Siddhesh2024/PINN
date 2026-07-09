@@ -74,68 +74,6 @@ class PINN:
             stddev=xavier_stddev),
             dtype=tf.float32)
 
-    def neural_net(self, X, weights, biases):
-
-        H = H = 2.0*(X-self.lb)/(self.ub-self.lb)-1.0#X
-
-        for l in range(len(weights)-1):
-
-            W = weights[l]
-            b = biases[l]
-
-            H = tf.nn.relu(tf.add(tf.matmul(H,W),b))#tf.tanh(tf.add(tf.matmul(H, W), b))
-
-        W = weights[-1]
-        b = biases[-1]
-
-        Y = tf.add(tf.matmul(H, W), b)
-
-        return Y
-
-    def net_projectile(self, t, weights, biases):
-
-        u = self.neural_net(t, weights, biases)
-
-        x = u[:,0:1]
-        y = u[:,1:2]
-
-        x_t = tf.gradients(x, t)[0]
-        y_t = tf.gradients(y, t)[0]
-
-        x_tt = tf.gradients(x_t, t)[0]
-        y_tt = tf.gradients(y_t, t)[0]
-
-        f_x = x_tt
-        f_y = y_tt + self.g
-
-        f = tf.concat([f_x, f_y], axis=1)
-
-        return u, f
-
-    def train(self, nIter):
-
-        tf_dict = {
-            self.t_tf: self.t,
-            self.u_tf: self.u
-        }
-
-        for it in range(nIter):
-
-            self.sess.run(self.train_op_Adam, tf_dict)
-
-            if it % 500 == 0:
-
-                loss_value = self.sess.run(self.loss, tf_dict)
-
-                print("Iteration:", it,
-                      "Loss:", loss_value)
-
-    def predict(self, t_star):
-
-        tf_dict = {
-            self.t_tf: t_star
-        }
-
-        u_star = self.sess.run(self.u_pred, tf_dict)
+  
 
         return u_star
