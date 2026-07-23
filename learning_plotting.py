@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 layers=[2, 20, 20, 20, 20, 20, 20, 20, 20, 1]
@@ -6,6 +7,21 @@ model = PhysicsInformedNN(x_train, t_train, u_train, x_f_train, t_f_train, layer
 model.train(200000)
 
 
+Nx = 201
+Nt = 101
+
+x = np.linspace(-1, 1, Nx)
+t = np.linspace(0, 1, Nt)
+
+X, T = np.meshgrid(x, t)
+
+x_star = X.flatten()[:, None]
+t_star = T.flatten()[:, None]
+
+
+u_pred = model.predict(x_star, t_star)
+
+U = u_pred.reshape(Nt, Nx)
 
 
 plt.figure(figsize=(8,4))
