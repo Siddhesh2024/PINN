@@ -128,10 +128,10 @@ class PhysicsInformedNN:
                       (it, loss_value))
                 start_time = time.time()
 
-        #self.optimizer.minimize(self.sess,
-         #                       feed_dict = tf_dict,
-          #                      fetches = [self.loss],#, self.lambda_1, self.lambda_2],
-           #                     loss_callback = self.callback)
+        self.optimizer.minimize(self.sess,
+                                feed_dict = tf_dict,
+                                fetches = [self.loss],#, self.lambda_1, self.lambda_2],
+                                loss_callback = self.callback)
 
 
     def predict(self, x_star, t_star):
