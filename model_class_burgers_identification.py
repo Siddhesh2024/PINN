@@ -12,7 +12,6 @@ tf.disable_v2_behavior()
 
 np.random.seed(1234)
 tf.set_random_seed(1234)
-nu=0.01/np.pi
 
 class PhysicsInformedNN:
     # Initialize the class
