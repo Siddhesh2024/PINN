@@ -4,8 +4,6 @@ sys.path.insert(0, '../../Utilities/')
 import tensorflow.compat.v1 as tf
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.io
-from scipy.interpolate import griddata
 import time
 
 tf.disable_v2_behavior()
